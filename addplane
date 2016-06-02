@@ -1,0 +1,18 @@
+import bpy
+import bmesh
+
+bme = bmesh.new()
+
+bme.verts.new((1,1,0))
+bme.verts.new((1,-1,0))
+bme.verts.new((-1,-1,0))
+bme.verts.new((-1,1,0))
+bme.verts.ensure_lookup_table()
+
+bme.faces.new(bme.verts)
+bme.faces.ensure_lookup_table()
+
+bme.to_mesh(bpy.data.objects['Cube'].data)
+
+bpy.ops.object.mode_set(mode='EDIT')
+bpy.ops.object.mode_set(mode='OBJECT')

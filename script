@@ -1,0 +1,13 @@
+import bpy
+from mathutils import Matrix, Vector, Euler
+from bpy.app.handlers import frame_change_pre
+
+def myhandler(scene):
+    R = Matrix.Rotation(0.1, 4, Vector((0,0,1)))
+    bpy.data.objects['Cube'].location = R * bpy.data.objects['Cube'].location
+
+if frame_change_pre:
+    frame_change_pre.clear()
+else:
+    frame_change_pre.append(myhandler)
+    

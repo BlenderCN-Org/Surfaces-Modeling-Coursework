@@ -1,0 +1,127 @@
+import bpy
+import bmesh
+import math
+from mathutils import Vector
+
+def create(lp, lf, obj_name = 'obj'):
+    bme = bmesh.new()
+    bmv = [bme.verts.new(p) for p in lp]
+    bmf = [bme.faces.new(bmv[i] for i in f) for f in lf]
+
+    me = bpy.data.meshes.new(obj_name)
+    ob = bpy.data.objects.new(obj_name, me)
+    bme.to_mesh(me)
+    me.update()
+
+    bpy.context.scene.objects.link(ob)
+    ob.update_tag()
+    bpy.context.scene.update()
+    #bpy.context.scene.objects.active = ob
+    ob.select = True
+    
+    
+    return ob
+
+def planer_quad():
+    p = [(-1, 1, 0), (1, 1, 0), (1, -1, 0), (-1, -1, 0)]
+    f = [(0, 1, 2, 3)]
+    return p, f
+
+def planer_circle():
+    pass
+
+def poly(num_sides = 3, radius = 1, loc = Vector((0, 0, 0)):
+    a = loc[0]
+    b = loc[1]
+    r = radius   
+
+    p = []
+    f = []
+
+    for i in range(0, 360, 360/num_sides):
+        x = a + (r*math.cos(math.radians(i))
+        y = b + (r*math.sin(math.radians(i))
+        
+        p.append((x, y, 0))
+
+    l = ()
+    for v in range(len(p)):
+        l.append(p[v])
+    f.append(l)
+
+    return p, f
+
+def cube():
+    pass
+
+def tetra():
+    pass
+
+def cap_cylinder():
+    pass
+
+def cone():
+    pass
+
+def octa():
+    pass
+
+def dodec():
+    pass
+
+def uv_sphere():
+    pass
+
+def ico_sphere():
+    pass
+
+def trunc_ico():
+    pass
+
+def torus():
+    pass
+
+def spawn_obj(obj_name = 'obj', obj_type = 0, loc = Vector(0, 0, 0)):
+    if obj_type == 0:
+        #p, f = planer_quad()
+        p, f = poly(4)
+        
+    else if obj_type == 1:
+        p, f = planer_circle()
+        
+    else if obj_type == 2:
+        p, f = cube()
+        
+    else if obj_type == 3:
+        p, f = tetra()
+        
+    else if obj_type == 4:
+        p, f = cap_cylinder()
+        
+    else if obj_type == 5:
+        p, f = cone()
+        
+    else if obj_type == 6:
+        p, f = octa()
+        
+    else if obj_type == 7:
+        p, f = dodec()
+        
+    else if obj_type == 8:
+        p, f = uv_sphere()
+        
+    else if obj_type == 9:
+        p, f = ico_sphere()
+        
+    else if obj_type == 10:
+        p, f = trunc_ico()
+        
+    else if obj_type == 11:
+        p, f = torus()
+        
+    ob = create(p, f, obj_name)
+    ob.location = loc
+        
+
+p0, f0 = planer_quad()
+ob0 = create(p0, f0, 'plane', (0, 0, 0))
